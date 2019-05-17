@@ -5,4 +5,5 @@
     <color name="colorAccent">#ACB6E5</color>
     <color name="drawer">#AED8DF</color>
     <color name="icons_drawer">#00C1E0</color>
+    <color name="icon_blue">#1AA8FF</color>
 </resources>
