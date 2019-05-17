@@ -55,6 +55,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.drawer_user -> {
                 supportFragmentManager.beginTransaction().replace(R.id.fragment_container, UserActivity()).commit()
             }
+            R.id.drawer_settings -> {
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, SettingsActivity()).commit()
+            }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)

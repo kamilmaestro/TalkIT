@@ -12,6 +12,10 @@
                 android:id="@+id/drawer_user"
                 android:icon="@drawable/ic_user_drawer_icon"
                 android:title="@string/user"/>
+        <item
+                android:id="@+id/drawer_settings"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/settings"/>
     </group>
 
 </menu>
