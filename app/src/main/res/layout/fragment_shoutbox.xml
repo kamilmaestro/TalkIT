@@ -6,8 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/shoutbox_backgorund"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/container">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <TextView
             android:text="soutbox"
             android:layout_width="wrap_content"
