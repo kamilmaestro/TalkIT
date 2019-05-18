@@ -18,4 +18,5 @@
     <string name="user">User</string>
     <string name="who_are_you">Who are you?</string>
     <string name="set_login">Set login</string>
+    <string name="LOGIN">LOGIN</string>
 </resources>
