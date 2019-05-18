@@ -1,5 +1,6 @@
 package com.kamilmarnik.talkit
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
@@ -13,6 +14,7 @@ class UserActivity: Fragment() {
     private lateinit var mLoginEditText:EditText
     lateinit var mSetLogin:Button
     lateinit var userLogin:String
+    private var model: Communicator ?= null
 
     companion object{
         fun create(): UserActivity = UserActivity()
@@ -24,16 +26,13 @@ class UserActivity: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        model = ViewModelProviders.of(activity!!).get(Communicator::class.java)
         mLoginEditText = view.findViewById(R.id.loginEditText)
         mSetLogin = view.findViewById(R.id.setLoginBtn)
-        mSetLogin.setOnClickListener{userLogin = getLoginEditText(); saveData()}
+        mSetLogin.setOnClickListener{userLogin = mLoginEditText.text.toString(); saveData(); passData()}
     }
 
-    private fun getLoginEditText(): String {
-        return mLoginEditText.text.toString()
-    }
-
-    fun saveData(){
+    private fun saveData(){
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)?: return
         with(sharedPref.edit()){
             putString(getString(R.string.LOGIN), userLogin)
@@ -41,4 +40,8 @@ class UserActivity: Fragment() {
         }
     }
 
+    private fun passData(){
+        model!!.setMsg(userLogin)
+        fragmentManager!!.beginTransaction().replace(R.id.fragment_container, ShoutboxActivity()).addToBackStack(null).commit()
+    }
 }
