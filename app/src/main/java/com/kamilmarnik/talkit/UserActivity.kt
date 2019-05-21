@@ -4,16 +4,18 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import com.kamilmarnik.talkit.dto.User
 
 class UserActivity: Fragment() {
     private lateinit var mLoginEditText:EditText
     lateinit var mSetLogin:Button
-    lateinit var userLogin:String
+    lateinit private var userLogin: String
     private var model: Communicator ?= null
 
     companion object{
@@ -29,19 +31,28 @@ class UserActivity: Fragment() {
         model = ViewModelProviders.of(activity!!).get(Communicator::class.java)
         mLoginEditText = view.findViewById(R.id.loginEditText)
         mSetLogin = view.findViewById(R.id.setLoginBtn)
-        mSetLogin.setOnClickListener{userLogin = mLoginEditText.text.toString(); saveData(); passData()}
+
+        mSetLogin.setOnClickListener{setLogin(); saveData(); passData()}
     }
 
     private fun saveData(){
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)?: return
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this.context)?: return
         with(sharedPref.edit()){
             putString(getString(R.string.LOGIN), userLogin)
             commit()
         }
+        Log.d("TAG", "user: $userLogin")
     }
+    fun setLogin(){
+        userLogin = mLoginEditText.text.toString()
+    }
+    fun getLogin(): String?{
+        return userLogin
+    }
+
 
     private fun passData(){
         model!!.setMsg(userLogin)
-        fragmentManager!!.beginTransaction().replace(R.id.fragment_container, ShoutboxActivity()).addToBackStack(null).commit()
+        fragmentManager!!.beginTransaction().replace(R.id.fragment_container, ShoutboxActivity()).commit()
     }
 }
