@@ -1,6 +1,7 @@
 package com.kamilmarnik.talkit
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
@@ -14,9 +15,8 @@ import com.kamilmarnik.talkit.dto.User
 
 class UserActivity: Fragment() {
     private lateinit var mLoginEditText:EditText
-    lateinit var mSetLogin:Button
-    lateinit private var userLogin: String
-    private var model: Communicator ?= null
+    private lateinit var mSetLogin:Button
+    private var user = User()
 
     companion object{
         fun create(): UserActivity = UserActivity()
@@ -28,31 +28,33 @@ class UserActivity: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model = ViewModelProviders.of(activity!!).get(Communicator::class.java)
         mLoginEditText = view.findViewById(R.id.loginEditText)
         mSetLogin = view.findViewById(R.id.setLoginBtn)
+        setLogin(loadData().toString())
+        mLoginEditText.setText(user.login)
 
-        mSetLogin.setOnClickListener{setLogin(); saveData(); passData()}
+        mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); saveData(); passData()}
+    }
+
+    private fun setLogin(value: String){
+        user.login = value
+    }
+
+    private fun loadData():String?{
+        val shared: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
+
+        return shared.getString(getString(R.string.LOGIN), "")
     }
 
     private fun saveData(){
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this.context)?: return
         with(sharedPref.edit()){
-            putString(getString(R.string.LOGIN), userLogin)
-            commit()
+            putString(getString(R.string.LOGIN), user.login)
+            apply()
         }
-        Log.d("TAG", "user: $userLogin")
     }
-    fun setLogin(){
-        userLogin = mLoginEditText.text.toString()
-    }
-    fun getLogin(): String?{
-        return userLogin
-    }
-
 
     private fun passData(){
-        model!!.setMsg(userLogin)
         fragmentManager!!.beginTransaction().replace(R.id.fragment_container, ShoutboxActivity()).commit()
     }
 }

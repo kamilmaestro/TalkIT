@@ -1,3 +1,5 @@
 package com.kamilmarnik.talkit.dto
 
-class User(var login: String?)
+class User{
+    var login: String = ""
+}
