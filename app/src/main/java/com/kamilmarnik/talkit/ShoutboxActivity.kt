@@ -11,10 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.kamilmarnik.talkit.dto.User
 
 class ShoutboxActivity: Fragment() {
-
-    lateinit var userLogin: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_shoutbox, container, false)
@@ -22,13 +21,5 @@ class ShoutboxActivity: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        userLogin = loadData().toString()
-    }
-
-    private fun loadData():String?{
-        val shared: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
-
-        return shared.getString(getString(R.string.LOGIN), "")
     }
 }

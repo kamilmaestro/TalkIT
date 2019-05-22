@@ -1,5 +1,5 @@
 package com.kamilmarnik.talkit.dto
 
-class User{
+object User{
     var login: String = ""
 }

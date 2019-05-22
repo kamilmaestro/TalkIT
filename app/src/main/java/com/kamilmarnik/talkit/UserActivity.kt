@@ -14,13 +14,6 @@ import android.widget.EditText
 import com.kamilmarnik.talkit.dto.User
 
 class UserActivity: Fragment() {
-    private lateinit var mLoginEditText:EditText
-    private lateinit var mSetLogin:Button
-    private var user = User()
-
-    companion object{
-        fun create(): UserActivity = UserActivity()
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_user, container, false)
@@ -28,16 +21,16 @@ class UserActivity: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mLoginEditText = view.findViewById(R.id.loginEditText)
-        mSetLogin = view.findViewById(R.id.setLoginBtn)
+        val mLoginEditText = view.findViewById<EditText>(R.id.loginEditText)
+        val mSetLogin = view.findViewById<Button>(R.id.setLoginBtn)
         setLogin(loadData().toString())
-        mLoginEditText.setText(user.login)
+        mLoginEditText.setText(User.login)
 
         mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); saveData(); passData()}
     }
 
     private fun setLogin(value: String){
-        user.login = value
+        User.login = value
     }
 
     private fun loadData():String?{
@@ -49,7 +42,7 @@ class UserActivity: Fragment() {
     private fun saveData(){
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this.context)?: return
         with(sharedPref.edit()){
-            putString(getString(R.string.LOGIN), user.login)
+            putString(getString(R.string.LOGIN), User.login)
             apply()
         }
     }
