@@ -1,16 +1,15 @@
 package com.kamilmarnik.talkit
 
-import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import com.kamilmarnik.talkit.constants.*
 import com.kamilmarnik.talkit.dto.User
 
 class UserActivity: Fragment() {
@@ -23,9 +22,9 @@ class UserActivity: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mLoginEditText = view.findViewById<EditText>(R.id.loginEditText)
         val mSetLogin = view.findViewById<Button>(R.id.setLoginBtn)
+
         setLogin(loadData().toString())
         mLoginEditText.setText(User.login)
-
         mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); saveData(); passData()}
     }
 
@@ -36,7 +35,7 @@ class UserActivity: Fragment() {
     private fun loadData():String?{
         val shared: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
 
-        return shared.getString(getString(R.string.LOGIN), "")
+        return shared.getString(getString(R.string.LOGIN), DEF_LOGIN)
     }
 
     private fun saveData(){

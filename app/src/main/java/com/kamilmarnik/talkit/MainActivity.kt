@@ -12,7 +12,6 @@ import android.view.Menu
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,7 +20,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+        val navView:NavigationView = findViewById(R.id.nav_view)
         navView.setNavigationItemSelectedListener(this)
 
         val toggle = ActionBarDrawerToggle(
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        getDefaultContent(navView)
+        getDefaultContent()
     }
 
     override fun onBackPressed() {
@@ -64,8 +63,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun getDefaultContent(navView: NavigationView){
+    private fun getDefaultContent(){
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, UserActivity()).commit()
-        navView.setCheckedItem(R.id.drawer_user)
     }
 }
