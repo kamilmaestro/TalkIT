@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.kamilmarnik.talkit.constants.*
 import com.kamilmarnik.talkit.dto.User
 
@@ -25,7 +26,7 @@ class UserActivity: Fragment() {
 
         setLogin(loadData().toString())
         mLoginEditText.setText(User.login)
-        mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); saveData(); passData()}
+        mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); checkData()}
     }
 
     private fun setLogin(value: String){
@@ -36,6 +37,14 @@ class UserActivity: Fragment() {
         val shared: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
 
         return shared.getString(getString(R.string.LOGIN), DEF_LOGIN)
+    }
+
+    private fun checkData(){
+        if(User.isLoginProper()) {
+            saveData()
+            passData()
+        }
+        else Toast.makeText(this.context, "Change login!", Toast.LENGTH_LONG).show()
     }
 
     private fun saveData(){
