@@ -1,4 +1,4 @@
-package com.kamilmarnik.talkit.dto
+package com.kamilmarnik.talkit.model
 
 object User{
     const val DEF_LOGIN = "unknown"

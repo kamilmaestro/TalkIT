@@ -1,8 +1,6 @@
 package com.kamilmarnik.talkit
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.kamilmarnik.talkit.dto.User
-import com.kamilmarnik.talkit.dto.User.DEF_LOGIN
+import com.kamilmarnik.talkit.model.User
+import com.kamilmarnik.talkit.model.User.DEF_LOGIN
 
 class UserActivity: Fragment() {
 
@@ -23,36 +21,23 @@ class UserActivity: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mLoginEditText = view.findViewById<EditText>(R.id.loginEditText)
         val mSetLogin = view.findViewById<Button>(R.id.setLoginBtn)
+        val data = Data.invoke()
 
-        setLogin(loadData().toString())
+        setLogin(data.loadData(this.context, getString(R.string.LOGIN), DEF_LOGIN).toString())
         mLoginEditText.setText(User.login)
-        mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); checkData()}
+        mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); checkData(data)}
     }
 
     private fun setLogin(value: String){
         User.login = value
     }
 
-    private fun loadData():String?{
-        val shared: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
-
-        return shared.getString(getString(R.string.LOGIN), DEF_LOGIN)
-    }
-
-    private fun checkData(){
+    private fun checkData(data: Data){
         if(User.isLoginProper()) {
-            saveData()
+            data.saveData(this.context, getString(R.string.LOGIN), User.login)
             passData()
         }
         else Toast.makeText(this.context, "Change login!", Toast.LENGTH_LONG).show()
-    }
-
-    private fun saveData(){
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this.context)?: return
-        with(sharedPref.edit()){
-            putString(getString(R.string.LOGIN), User.login)
-            apply()
-        }
     }
 
     private fun passData(){
