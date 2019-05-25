@@ -2,7 +2,7 @@ package com.kamilmarnik.talkit.model
 
 object User{
     const val DEF_LOGIN = "unknown"
-    private const val MAX_LOGIN = 20
+    private const val MAX_LOGIN = 15
     private const val MIN_LOGIN = 5
     var login: String = ""
 

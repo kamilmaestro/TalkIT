@@ -25,22 +25,22 @@ class UserActivity: Fragment() {
 
         setLogin(data.loadData(this.context, getString(R.string.LOGIN), DEF_LOGIN).toString())
         mLoginEditText.setText(User.login)
-        mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); checkData(data)}
+        mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); checkLogin(data)}
     }
 
     private fun setLogin(value: String){
         User.login = value
     }
 
-    private fun checkData(data: Data){
+    private fun checkLogin(data: Data){
         if(User.isLoginProper()) {
             data.saveData(this.context, getString(R.string.LOGIN), User.login)
-            passData()
+            goToShoutbox()
         }
         else Toast.makeText(this.context, "Change login!", Toast.LENGTH_LONG).show()
     }
 
-    private fun passData(){
+    private fun goToShoutbox(){
         fragmentManager!!.beginTransaction().replace(R.id.fragment_container, ShoutboxActivity()).commit()
     }
 }

@@ -1,3 +1,3 @@
 package com.kamilmarnik.talkit.model
 
-class Message(login: String, date: String, content: String)
+class Message(var login: String, var date: String, var hour: String, var content: String)
