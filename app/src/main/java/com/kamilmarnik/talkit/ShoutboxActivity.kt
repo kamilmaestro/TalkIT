@@ -36,11 +36,12 @@ class ShoutboxActivity: Fragment() {
         loadMessages(mMessageRecView)
     }
 
-    fun loadMessages(rec: RecyclerView){
+    private fun loadMessages(recView: RecyclerView){
         val retrofit: Retrofit = MessageService.invoke().buildRetrofit(getString(R.string.URL))
-
         val messAPI: MessageAPI = retrofit.create(MessageAPI::class.java)
+
         val call: Call<List<MessageJSON>> = messAPI.getMessagesJSON()
+
         call.enqueue(object : Callback<List<MessageJSON>> {
             override fun onFailure(call: Call<List<MessageJSON>>, t: Throwable) {
                 Toast.makeText(context, "Error: ".plus(t.message), Toast.LENGTH_LONG).show()
@@ -51,14 +52,16 @@ class ShoutboxActivity: Fragment() {
                     Toast.makeText(context, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
                     return
                 }
-                val messJSON: List<MessageJSON>? = response.body()
-                for((counter) in (0 until messJSON?.size!!).withIndex()) {
-                    messagesList.add(Message(messJSON[counter].login, messJSON[counter].date, "23:05", messJSON[counter].content))
-                }
-                rec.adapter = MessageAdapter(messagesList, context)
+                showMessages(response, recView)
             }
         })
+    }
 
-
+    fun showMessages(response: Response<List<MessageJSON>>, recView: RecyclerView){
+        val messJSON: List<MessageJSON>? = response.body()
+        for((counter) in (0 until messJSON?.size!!).withIndex()) {
+            messagesList.add(Message(messJSON[counter].login, messJSON[counter].date, "23:05", messJSON[counter].content))
+        }
+        recView.adapter = MessageAdapter(messagesList, context)
     }
 }

@@ -8,4 +8,5 @@ class MessageServiceImpl: MessageService {
     override fun buildRetrofit(url: String): Retrofit =
         Retrofit.Builder().baseUrl(url).addConverterFactory(GsonConverterFactory.create()).build()
 
+
 }
