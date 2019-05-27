@@ -14,7 +14,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 class ShoutboxActivity: Fragment() {
@@ -39,14 +38,12 @@ class ShoutboxActivity: Fragment() {
     private fun loadMessages(recView: RecyclerView){
         val retrofit: Retrofit = MessageService.invoke().buildRetrofit(getString(R.string.URL))
         val messAPI: MessageAPI = retrofit.create(MessageAPI::class.java)
-
         val call: Call<List<MessageJSON>> = messAPI.getMessagesJSON()
 
         call.enqueue(object : Callback<List<MessageJSON>> {
             override fun onFailure(call: Call<List<MessageJSON>>, t: Throwable) {
                 Toast.makeText(context, "Error: ".plus(t.message), Toast.LENGTH_LONG).show()
             }
-
             override fun onResponse(call: Call<List<MessageJSON>>, response: Response<List<MessageJSON>>) {
                 if(!response.isSuccessful){
                     Toast.makeText(context, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
@@ -60,7 +57,10 @@ class ShoutboxActivity: Fragment() {
     fun showMessages(response: Response<List<MessageJSON>>, recView: RecyclerView){
         val messJSON: List<MessageJSON>? = response.body()
         for((counter) in (0 until messJSON?.size!!).withIndex()) {
-            messagesList.add(Message(messJSON[counter].login, messJSON[counter].date, "23:05", messJSON[counter].content))
+            messagesList.add(Message(messJSON[counter].login,
+                MessageService.invoke().getMessDate(messJSON[counter].date),
+                MessageService.invoke().getMessHour(messJSON[counter].date),
+                messJSON[counter].content))
         }
         recView.adapter = MessageAdapter(messagesList, context)
     }
