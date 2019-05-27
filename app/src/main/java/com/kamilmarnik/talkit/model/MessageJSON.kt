@@ -2,7 +2,7 @@ package com.kamilmarnik.talkit.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MessJSON(
+data class MessageJSON(
     @SerializedName("content") var content:String,
     @SerializedName("login") var login:String,
     @SerializedName("date") var date:String,
