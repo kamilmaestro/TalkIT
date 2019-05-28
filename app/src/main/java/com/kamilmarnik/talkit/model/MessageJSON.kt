@@ -1,10 +1,6 @@
 package com.kamilmarnik.talkit.model
 
-import com.google.gson.annotations.SerializedName
-
-data class MessageJSON(
-    @SerializedName("content") var content:String,
-    @SerializedName("login") var login:String,
-    @SerializedName("date") var date:String,
-    @SerializedName("id") var id: String
-)
+data class MessageJSON(var content: String, var login: String) {
+    var date: String? = null
+    var id: String? = null
+}

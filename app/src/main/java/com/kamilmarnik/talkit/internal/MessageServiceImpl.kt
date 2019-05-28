@@ -11,10 +11,10 @@ class MessageServiceImpl: MessageService {
         return retrofit.create(MessageAPI::class.java)
     }
 
-    override fun getMessDate(wholeDate: String): String =
-        wholeDate.substringBefore("T")
+    override fun getMessDate(wholeDate: String?): String =
+        wholeDate?.substringBefore("T").toString()
 
-    override fun getMessHour(wholeDate: String): String =
-        wholeDate.subSequence(wholeDate.indexOf("T") + 1, wholeDate.indexOf(".")).toString()
+    override fun getMessHour(wholeDate: String?): String =
+        wholeDate?.subSequence(wholeDate.indexOf("T") + 1, wholeDate.indexOf(".")).toString()
 
 }

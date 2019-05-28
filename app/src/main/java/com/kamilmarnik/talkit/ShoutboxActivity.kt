@@ -32,6 +32,7 @@ class ShoutboxActivity: Fragment() {
         mMessageRecView.adapter = MessageAdapter(messagesList, this.context)
 
         loadMessages(mMessageRecView)
+        sendMessages()
     }
 
     private fun loadMessages(recView: RecyclerView){
@@ -63,7 +64,9 @@ class ShoutboxActivity: Fragment() {
     }
 
     fun sendMessages(){
-        val call: Call<MessageJSON> = MessageService.invoke().getMessAPI(getString(R.string.URL)).postMessageJSON()
+        val messJSON = MessageJSON("test2", "unknown")
+        val call: Call<MessageJSON> = MessageService.invoke().getMessAPI(getString(R.string.URL))
+            .postMessageJSON(messJSON.content, messJSON.login)
 
         call.enqueue(object : Callback<MessageJSON>{
             override fun onFailure(call: Call<MessageJSON>, t: Throwable) {
@@ -75,8 +78,6 @@ class ShoutboxActivity: Fragment() {
                     Toast.makeText(context, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
                     return
                 }
-
-                
             }
         })
     }
