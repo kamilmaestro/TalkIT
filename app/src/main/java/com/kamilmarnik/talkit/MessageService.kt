@@ -2,9 +2,10 @@ package com.kamilmarnik.talkit
 
 import com.kamilmarnik.talkit.internal.MessageServiceImpl
 import retrofit2.Retrofit
+import java.net.URL
 
 interface MessageService {
-    fun buildRetrofit(url: String): Retrofit
+    fun getMessAPI(url: String): MessageAPI
     fun getMessDate(wholeDate: String): String
     fun getMessHour(wholeDate: String): String
 

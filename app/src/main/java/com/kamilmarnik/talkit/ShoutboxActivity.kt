@@ -13,7 +13,6 @@ import com.kamilmarnik.talkit.model.Message
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 import java.util.*
 
 class ShoutboxActivity: Fragment() {
@@ -36,9 +35,7 @@ class ShoutboxActivity: Fragment() {
     }
 
     private fun loadMessages(recView: RecyclerView){
-        val retrofit: Retrofit = MessageService.invoke().buildRetrofit(getString(R.string.URL))
-        val messAPI: MessageAPI = retrofit.create(MessageAPI::class.java)
-        val call: Call<List<MessageJSON>> = messAPI.getMessagesJSON()
+        val call: Call<List<MessageJSON>> = MessageService.invoke().getMessAPI(getString(R.string.URL)).getMessagesJSON()
 
         call.enqueue(object : Callback<List<MessageJSON>> {
             override fun onFailure(call: Call<List<MessageJSON>>, t: Throwable) {
@@ -63,5 +60,24 @@ class ShoutboxActivity: Fragment() {
                 messJSON[counter].content))
         }
         recView.adapter = MessageAdapter(messagesList, context)
+    }
+
+    fun sendMessages(){
+        val call: Call<MessageJSON> = MessageService.invoke().getMessAPI(getString(R.string.URL)).postMessageJSON()
+
+        call.enqueue(object : Callback<MessageJSON>{
+            override fun onFailure(call: Call<MessageJSON>, t: Throwable) {
+                Toast.makeText(context, "Error: ".plus(t.message), Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<MessageJSON>, response: Response<MessageJSON>) {
+                if(!response.isSuccessful){
+                    Toast.makeText(context, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
+                    return
+                }
+
+                
+            }
+        })
     }
 }
