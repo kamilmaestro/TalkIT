@@ -7,9 +7,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import com.kamilmarnik.talkit.model.MessageJSON
 import com.kamilmarnik.talkit.model.Message
+import com.kamilmarnik.talkit.model.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,13 +30,15 @@ class ShoutboxActivity: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val mSendBtn = view.findViewById<ImageButton>(R.id.sendBtn)
+        val mMessEditText = view.findViewById<EditText>(R.id.messageEditText)
         val mMessageRecView = view.findViewById<RecyclerView>(R.id.messagesRecyclerView)
         mMessageRecView.setHasFixedSize(true)
         mMessageRecView.layoutManager = LinearLayoutManager(this.context)
         mMessageRecView.adapter = MessageAdapter(messagesList, this.context)
 
         loadMessages(mMessageRecView)
-        sendMessages()
+        mSendBtn.setOnClickListener{sendMessages(mMessEditText.text.toString())}
     }
 
     private fun loadMessages(recView: RecyclerView){
@@ -63,8 +69,8 @@ class ShoutboxActivity: Fragment() {
         recView.adapter = MessageAdapter(messagesList, context)
     }
 
-    fun sendMessages(){
-        val messJSON = MessageJSON("test2", "unknown")
+    fun sendMessages(content: String){
+        val messJSON = MessageJSON(content, User.login)
         val call: Call<MessageJSON> = MessageService.invoke().getMessAPI(getString(R.string.URL))
             .postMessageJSON(messJSON.content, messJSON.login)
 
