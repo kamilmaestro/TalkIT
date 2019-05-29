@@ -24,7 +24,7 @@
                 android:textColor="@android:color/background_light" android:textStyle="bold"/>
         <ImageButton
                 android:layout_width="5dp"
-                android:layout_height="50dp" app:srcCompat="@drawable/send_message"
+                android:layout_height="50dp" app:srcCompat="@drawable/send_message_btn"
                 android:id="@+id/sendBtn" android:layout_weight="1"
                 android:backgroundTint="@android:color/transparent"/>
     </LinearLayout>

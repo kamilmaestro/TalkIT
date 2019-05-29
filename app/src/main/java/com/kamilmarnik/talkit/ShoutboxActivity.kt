@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -38,7 +37,7 @@ class ShoutboxActivity: Fragment() {
         mMessageRecView.adapter = MessageAdapter(messagesList, this.context)
 
         loadMessages(mMessageRecView)
-        mSendBtn.setOnClickListener{sendMessages(mMessEditText.text.toString())}
+        mSendBtn.setOnClickListener{sendMessages(mMessEditText.text.toString()); mMessEditText.text.clear()}
     }
 
     private fun loadMessages(recView: RecyclerView){
