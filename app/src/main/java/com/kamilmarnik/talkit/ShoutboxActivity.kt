@@ -38,10 +38,11 @@ class ShoutboxActivity: Fragment() {
 
         loadMessages(mMessageRecView)
         mSendBtn.setOnClickListener{sendMessages(mMessEditText.text.toString()); mMessEditText.text.clear()}
+        deleteMessage("5ced0ee308208d03d637a06c")
     }
 
     private fun loadMessages(recView: RecyclerView){
-        val call: Call<List<MessageJSON>> = MessageService.invoke().getMessAPI(getString(R.string.URL)).getMessagesJSON()
+        val call: Call<List<MessageJSON>> = MessageService.invoke().getMessAPI(getString(R.string.URL)).getAllMessJSON()
 
         call.enqueue(object : Callback<List<MessageJSON>> {
             override fun onFailure(call: Call<List<MessageJSON>>, t: Throwable) {
@@ -71,7 +72,7 @@ class ShoutboxActivity: Fragment() {
     fun sendMessages(content: String){
         val messJSON = MessageJSON(content, User.login)
         val call: Call<MessageJSON> = MessageService.invoke().getMessAPI(getString(R.string.URL))
-            .postMessageJSON(messJSON.content, messJSON.login)
+            .postMessJSON(messJSON.content, messJSON.login)
 
         call.enqueue(object : Callback<MessageJSON>{
             override fun onFailure(call: Call<MessageJSON>, t: Throwable) {
@@ -85,5 +86,25 @@ class ShoutboxActivity: Fragment() {
                 }
             }
         })
+    }
+
+    fun deleteMessage(id: String){
+        val call: Call<Void> = MessageService.invoke().getMessAPI(getString(R.string.URL))
+            .deleteMessJSON(id)
+
+        call.enqueue(object : Callback<Void>{
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                Toast.makeText(context, "Error: ".plus(t.message), Toast.LENGTH_LONG).show()
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if(!response.isSuccessful) {
+                    Toast.makeText(context, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
+                    return
+                }
+            }
+
+        })
+
     }
 }

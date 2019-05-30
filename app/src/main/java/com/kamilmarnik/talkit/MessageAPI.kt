@@ -5,7 +5,12 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface MessageAPI{
-    @GET("messages") fun getMessagesJSON(): Call<List<MessageJSON>>
-    @FormUrlEncoded @POST("message") fun postMessageJSON(@Field("content") content: String,
-                                                            @Field("login") login: String): Call<MessageJSON>
+    @GET("messages") fun getAllMessJSON(): Call<List<MessageJSON>>
+
+    @FormUrlEncoded @POST("message") fun postMessJSON(@Field("content") content: String,
+                                                      @Field("login") login: String): Call<MessageJSON>
+
+    @PUT("message/{id}") fun putMessJSON(@Path("id") id: String): Call<MessageJSON>
+
+    @DELETE("message/{id}") fun deleteMessJSON(@Path("id") id: String): Call<Void>
 }
