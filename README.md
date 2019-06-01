@@ -1,5 +1,5 @@
 # TalkIT
-Application which enables to post your ideas switching between users.
+Application which enables you to post your ideas switching between users.
 
 
 
