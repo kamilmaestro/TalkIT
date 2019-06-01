@@ -2,6 +2,7 @@ package com.kamilmarnik.talkit
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ class MessageAdapter(private var messagesList: MutableList<Message>, private val
 
         holder.itemView.setOnLongClickListener{
             remove(position)
+            val removed = currentMess.id
             true
         }
     }
@@ -40,6 +42,5 @@ class MessageAdapter(private var messagesList: MutableList<Message>, private val
     fun remove(position: Int) {
         messagesList.removeAt(position)
         notifyItemChanged(position)
-        //return true
     }
 }

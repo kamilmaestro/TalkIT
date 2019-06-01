@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +37,7 @@ class ShoutboxActivity: Fragment() {
         mMessageRecView.adapter = MessageAdapter(messagesList, this.context)
         loadMessages(mMessageRecView)
         mSendBtn.setOnClickListener{sendMessages(mMessEditText.text.toString()); mMessEditText.text.clear()}
-        deleteMessage("5ced0ee308208d03d637a06c")
+        deleteMessage("5ced0ee808208d03d637a06d")
     }
 
     private fun loadMessages(recView: RecyclerView){
@@ -90,22 +89,7 @@ class ShoutboxActivity: Fragment() {
         })
     }
 
-    fun deleteMessage(id: String){
-        val call: Call<Void> = MessageService.invoke().getMessAPI(getString(R.string.URL))
-            .deleteMessJSON(id)
-
-        call.enqueue(object : Callback<Void>{
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Toast.makeText(context, "Error: ".plus(t.message), Toast.LENGTH_LONG).show()
-            }
-
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if(!response.isSuccessful) {
-                    Toast.makeText(context, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
-                    return
-                }
-            }
-        })
-
+    private fun deleteMessage(id: String){
+        HttpRequests.invoke(getString(R.string.URL)).deleteMessage(id, context)
     }
 }
