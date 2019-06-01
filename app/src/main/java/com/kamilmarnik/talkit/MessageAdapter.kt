@@ -9,7 +9,8 @@ import android.widget.TextView
 import com.kamilmarnik.talkit.model.Message
 import kotlinx.android.synthetic.main.message_item.view.*
 
-class MessageAdapter(private val messagesList: List<Message>, private val context: Context?): RecyclerView.Adapter<MessageAdapter.MessViewHolder>() {
+class MessageAdapter(private var messagesList: MutableList<Message>, private val context: Context?): RecyclerView.Adapter<MessageAdapter.MessViewHolder>() {
+    //lateinit var onClick: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewHolder: Int): MessViewHolder =
         MessViewHolder(LayoutInflater.from(context).inflate(R.layout.message_item, parent, false))
@@ -20,6 +21,11 @@ class MessageAdapter(private val messagesList: List<Message>, private val contex
         holder.date?.text = currentMess.date
         holder.hour?.text = currentMess.hour
         holder.content?.text = currentMess.content
+
+        holder.itemView.setOnLongClickListener{
+            remove(position)
+            true
+        }
     }
 
     override fun getItemCount(): Int = messagesList.size
@@ -29,5 +35,11 @@ class MessageAdapter(private val messagesList: List<Message>, private val contex
         val date: TextView? = view.dateText
         val hour: TextView? = view.hourText
         val content: TextView? = view.contentText
+    }
+
+    fun remove(position: Int) {
+        messagesList.removeAt(position)
+        notifyItemChanged(position)
+        //return true
     }
 }

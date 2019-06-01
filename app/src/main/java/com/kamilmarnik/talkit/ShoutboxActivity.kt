@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,6 @@ class ShoutboxActivity: Fragment() {
         mMessageRecView.setHasFixedSize(true)
         mMessageRecView.layoutManager = LinearLayoutManager(this.context)
         mMessageRecView.adapter = MessageAdapter(messagesList, this.context)
-
         loadMessages(mMessageRecView)
         mSendBtn.setOnClickListener{sendMessages(mMessEditText.text.toString()); mMessEditText.text.clear()}
         deleteMessage("5ced0ee308208d03d637a06c")
@@ -64,7 +64,9 @@ class ShoutboxActivity: Fragment() {
             messagesList.add(Message(messJSON[counter].login,
                 MessageService.invoke().getMessDate(messJSON[counter].date),
                 MessageService.invoke().getMessHour(messJSON[counter].date),
-                messJSON[counter].content))
+                messJSON[counter].content,
+                messJSON[counter].id)
+            )
         }
         recView.adapter = MessageAdapter(messagesList, context)
     }
@@ -103,7 +105,6 @@ class ShoutboxActivity: Fragment() {
                     return
                 }
             }
-
         })
 
     }
