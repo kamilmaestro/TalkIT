@@ -12,7 +12,6 @@ import android.widget.ImageButton
 import android.widget.Toast
 import com.kamilmarnik.talkit.model.MessageJSON
 import com.kamilmarnik.talkit.model.Message
-import com.kamilmarnik.talkit.model.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,13 +31,17 @@ class ShoutboxActivity: Fragment() {
         val mSendBtn = view.findViewById<ImageButton>(R.id.sendBtn)
         val mMessEditText = view.findViewById<EditText>(R.id.messageEditText)
         val mMessageRecView = view.findViewById<RecyclerView>(R.id.messagesRecyclerView)
+
+        buildRecView(mMessageRecView)
+        loadMessages(mMessageRecView)
+        mSendBtn.setOnClickListener{sendMessage(mMessEditText.text.toString()); mMessEditText.text.clear()}
+        mMessageRecView.adapter
+    }
+
+    private fun buildRecView(mMessageRecView: RecyclerView){
         mMessageRecView.setHasFixedSize(true)
         mMessageRecView.layoutManager = LinearLayoutManager(this.context)
         mMessageRecView.adapter = MessageAdapter(messagesList, this.context)
-        loadMessages(mMessageRecView)
-        mSendBtn.setOnClickListener{sendMessages(mMessEditText.text.toString()); mMessEditText.text.clear()}
-        mMessageRecView.adapter
-        //deleteMessage("5ced0ee808208d03d637a06d")
     }
 
     private fun loadMessages(recView: RecyclerView){
@@ -71,22 +74,7 @@ class ShoutboxActivity: Fragment() {
         recView.adapter = MessageAdapter(messagesList, context)
     }
 
-    fun sendMessages(content: String){
-        val messJSON = MessageJSON(content, User.login)
-        val call: Call<MessageJSON> = MessageService.invoke().getMessAPI(getString(R.string.URL))
-            .postMessJSON(messJSON.content, messJSON.login)
-
-        call.enqueue(object : Callback<MessageJSON>{
-            override fun onFailure(call: Call<MessageJSON>, t: Throwable) {
-                Toast.makeText(context, "Error: ".plus(t.message), Toast.LENGTH_LONG).show()
-            }
-
-            override fun onResponse(call: Call<MessageJSON>, response: Response<MessageJSON>) {
-                if(!response.isSuccessful){
-                    Toast.makeText(context, "Error: ".plus(response.code()), Toast.LENGTH_LONG).show()
-                    return
-                }
-            }
-        })
+    private fun sendMessage(content: String){
+        HttpRequests.invoke(getString(R.string.URL)).sendMessage(content, context)
     }
 }

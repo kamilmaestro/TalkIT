@@ -40,5 +40,6 @@ class MessageAdapter(private val messagesList: MutableList<Message>, private val
     private fun remove(position: Int) {
         messagesList.removeAt(position)
         notifyItemChanged(position)
+        notifyDataSetChanged()
     }
 }
