@@ -10,7 +10,7 @@ import retrofit2.Response
 
 class HttpRequestsImpl(override var url: String) : HttpRequests {
 
-    override fun deleteMessage(id: String, context: Context?) {
+    override fun deleteMessage(id: String?, context: Context?) {
         val call: Call<Void> = MessageService.invoke().getMessAPI(url)
             .deleteMessJSON(id)
 

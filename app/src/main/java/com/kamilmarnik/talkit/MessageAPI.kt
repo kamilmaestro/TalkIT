@@ -12,5 +12,5 @@ interface MessageAPI{
 
     @PUT("message/{id}") fun putMessJSON(@Path("id") id: String): Call<MessageJSON>
 
-    @DELETE("message/{id}") fun deleteMessJSON(@Path("id") id: String): Call<Void>
+    @DELETE("message/{id}") fun deleteMessJSON(@Path("id") id: String?): Call<Void>
 }

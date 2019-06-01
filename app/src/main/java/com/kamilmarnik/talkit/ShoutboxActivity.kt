@@ -37,7 +37,8 @@ class ShoutboxActivity: Fragment() {
         mMessageRecView.adapter = MessageAdapter(messagesList, this.context)
         loadMessages(mMessageRecView)
         mSendBtn.setOnClickListener{sendMessages(mMessEditText.text.toString()); mMessEditText.text.clear()}
-        deleteMessage("5ced0ee808208d03d637a06d")
+        mMessageRecView.adapter
+        //deleteMessage("5ced0ee808208d03d637a06d")
     }
 
     private fun loadMessages(recView: RecyclerView){
@@ -87,9 +88,5 @@ class ShoutboxActivity: Fragment() {
                 }
             }
         })
-    }
-
-    private fun deleteMessage(id: String){
-        HttpRequests.invoke(getString(R.string.URL)).deleteMessage(id, context)
     }
 }
