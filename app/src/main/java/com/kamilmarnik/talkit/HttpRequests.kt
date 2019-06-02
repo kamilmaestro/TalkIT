@@ -6,8 +6,9 @@ import retrofit2.Call
 
 interface HttpRequests {
     var url: String
-    fun deleteMessage(id: String?, context: Context?)
     fun sendMessage(content: String, context: Context?)
+    fun deleteMessage(id: String?, context: Context?)
+    fun editMessage(id: String?, content: String, context: Context?)
     fun makeEnqueue(call: Call<Any>, context: Context?)
 
     companion object{

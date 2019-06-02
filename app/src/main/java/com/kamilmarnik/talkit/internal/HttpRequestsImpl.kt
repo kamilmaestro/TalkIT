@@ -12,6 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HttpRequestsImpl(override var url: String) : HttpRequests {
+
     override fun sendMessage(content: String, context: Context?) {
         val messJSON = MessageJSON(content, User.login)
         val call: Call<MessageJSON> = MessageService.invoke().getMessAPI(url)
@@ -21,10 +22,13 @@ class HttpRequestsImpl(override var url: String) : HttpRequests {
     }
 
     override fun deleteMessage(id: String?, context: Context?) {
-        val call: Call<Void> = MessageService.invoke().getMessAPI(url)
-            .deleteMessJSON(id)
+        val call: Call<Void> = MessageService.invoke().getMessAPI(url).deleteMessJSON(id)
 
         makeEnqueue(call as Call<Any>, context)
+    }
+
+    override fun editMessage(id: String?, content: String, context: Context?) {
+        val call: Call<MessageJSON> = MessageService.invoke().getMessAPI(url).putMessJSON(id)
     }
 
     override fun makeEnqueue(call: Call<Any>, context: Context?) {

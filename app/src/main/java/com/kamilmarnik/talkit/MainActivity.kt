@@ -8,9 +8,10 @@ import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, EditMessDialog.EditMessDialogListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,5 +66,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun getDefaultContent(){
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, UserActivity()).commit()
+    }
+
+    override fun applyContent(newContent: String) {
+        MessageAdapter.EditedMess.newContent = newContent
+        MessageAdapter.EditedMess.request(this)
     }
 }

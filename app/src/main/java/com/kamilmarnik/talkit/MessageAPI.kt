@@ -10,7 +10,7 @@ interface MessageAPI{
     @FormUrlEncoded @POST("message") fun postMessJSON(@Field("content") content: String,
                                                       @Field("login") login: String): Call<MessageJSON>
 
-    @PUT("message/{id}") fun putMessJSON(@Path("id") id: String): Call<MessageJSON>
+    @PUT("message/{id}") fun putMessJSON(@Path("id") id: String?): Call<MessageJSON>
 
     @DELETE("message/{id}") fun deleteMessJSON(@Path("id") id: String?): Call<Void>
 }

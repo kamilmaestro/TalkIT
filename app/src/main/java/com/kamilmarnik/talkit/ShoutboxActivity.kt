@@ -1,5 +1,6 @@
 package com.kamilmarnik.talkit
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -19,6 +20,8 @@ import java.util.*
 
 class ShoutboxActivity: Fragment() {
 
+    companion object fun invoke(): ShoutboxActivity = ShoutboxActivity()
+
     private var messagesList: MutableList<Message> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,7 +38,6 @@ class ShoutboxActivity: Fragment() {
         buildRecView(mMessageRecView)
         loadMessages(mMessageRecView)
         mSendBtn.setOnClickListener{sendMessage(mMessEditText.text.toString()); mMessEditText.text.clear()}
-        mMessageRecView.adapter
     }
 
     private fun buildRecView(mMessageRecView: RecyclerView){
