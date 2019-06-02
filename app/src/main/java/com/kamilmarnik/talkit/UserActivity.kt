@@ -21,20 +21,19 @@ class UserActivity: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mLoginEditText = view.findViewById<EditText>(R.id.loginEditText)
         val mSetLogin = view.findViewById<Button>(R.id.setLoginBtn)
-        val data = Data.invoke()
 
-        setLogin(data.loadData(this.context, getString(R.string.LOGIN), DEF_LOGIN).toString())
+        setLogin(loadData(this.context, getString(R.string.LOGIN), DEF_LOGIN).toString())
         mLoginEditText.setText(User.login)
-        mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); checkLogin(data)}
+        mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); checkLogin()}
     }
 
     private fun setLogin(value: String){
         User.login = value
     }
 
-    private fun checkLogin(data: Data){
+    private fun checkLogin(){
         if(User.isLoginProper()) {
-            data.saveData(this.context, getString(R.string.LOGIN), User.login)
+            saveData(this.context, getString(R.string.LOGIN), User.login)
             goToShoutbox()
         }
         else Toast.makeText(this.context, "Change login!", Toast.LENGTH_LONG).show()
