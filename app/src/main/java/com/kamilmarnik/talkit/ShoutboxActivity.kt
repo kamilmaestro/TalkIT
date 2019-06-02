@@ -2,6 +2,7 @@ package com.kamilmarnik.talkit
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ShoutboxActivity: Fragment() {
 
@@ -37,6 +39,7 @@ class ShoutboxActivity: Fragment() {
         buildRecView(mMessageRecView)
         loadMessages(mMessageRecView)
         mSendBtn.setOnClickListener{sendMessage(mMessEditText.text.toString()); mMessEditText.text.clear()}
+        manualRefresh(mMessageRecView, messagesList as MutableList<Any>)
     }
 
     private fun buildRecView(mMessageRecView: RecyclerView){
@@ -77,5 +80,10 @@ class ShoutboxActivity: Fragment() {
 
     private fun sendMessage(content: String){
         HttpRequests.invoke(getString(R.string.URL)).sendMessage(content, context)
+    }
+
+    private fun manualRefresh(recView: RecyclerView, messList: MutableList<Any>){
+        val pullToRefresh: SwipeRefreshLayout = view!!.findViewById(R.id.pullToRefresh)
+        pullToRefresh.setOnRefreshListener { messList.clear(); loadMessages(recView); pullToRefresh.isRefreshing = false}
     }
 }
