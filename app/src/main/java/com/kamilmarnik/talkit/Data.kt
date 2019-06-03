@@ -18,7 +18,7 @@ fun saveData(context: Context?, key: String, value: String) {
 fun loadData(context: Context?, key: String, defVal: String): String? =
     PreferenceManager.getDefaultSharedPreferences(context).getString(key, defVal)
 
-fun goTo(fragment: Fragment, fragmentManager: FragmentManager?, activity: Activity, checkedItem: Int) {
+fun goToFragment(fragment: Fragment, fragmentManager: FragmentManager?, activity: Activity, checkedItem: Int) {
     (activity as MainActivity).nav_view.setCheckedItem(checkedItem)
     fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, fragment)?.commit()
 }

@@ -9,7 +9,6 @@ import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, EditMessDialog.EditMessDialogListener{
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        getDefaultContent()
+        goToFragment(UserActivity(), supportFragmentManager, this, R.id.drawer_user)
     }
 
     override fun onBackPressed() {
@@ -63,11 +62,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    private fun getDefaultContent(){
-        nav_view.setCheckedItem(R.id.drawer_user)
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, UserActivity()).commit()
     }
 
     override fun applyContent(newContent: String) {
