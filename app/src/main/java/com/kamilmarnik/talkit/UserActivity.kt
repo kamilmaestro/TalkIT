@@ -2,6 +2,7 @@ package com.kamilmarnik.talkit
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.kamilmarnik.talkit.model.User
 import com.kamilmarnik.talkit.model.User.DEF_LOGIN
+import kotlinx.android.synthetic.main.activity_main.*
 
 class UserActivity: Fragment() {
 
@@ -36,10 +38,11 @@ class UserActivity: Fragment() {
             saveData(this.context, getString(R.string.LOGIN), User.login)
             goToShoutbox()
         }
-        else Toast.makeText(this.context, "Change login!", Toast.LENGTH_LONG).show()
+        else Toast.makeText(this.context, "Wrong login!", Toast.LENGTH_LONG).show()
     }
 
     private fun goToShoutbox(){
+        (activity as MainActivity).nav_view.setCheckedItem(R.id.drawer_shoutbox)
         fragmentManager!!.beginTransaction().replace(R.id.fragment_container, ShoutboxActivity()).commit()
     }
 }

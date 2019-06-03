@@ -8,8 +8,9 @@ import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.Menu
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, EditMessDialog.EditMessDialogListener{
 
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val drawerLayout:DrawerLayout = findViewById(R.id.drawer_layout)
         val navView:NavigationView = findViewById(R.id.nav_view)
         navView.setNavigationItemSelectedListener(this)
 
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun getDefaultContent(){
+        nav_view.setCheckedItem(R.id.drawer_user)
         supportFragmentManager.beginTransaction().replace(R.id.fragment_container, UserActivity()).commit()
     }
 

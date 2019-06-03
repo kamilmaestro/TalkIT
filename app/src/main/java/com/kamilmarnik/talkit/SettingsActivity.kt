@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.kamilmarnik.talkit.model.User
 
 class SettingsActivity: Fragment(){
 
@@ -30,7 +31,7 @@ class SettingsActivity: Fragment(){
 
     private fun floatBtnListeners(){
         deleteFloatBtn.setOnClickListener { view ->
-            Snackbar.make(view, "Press a few seconds to delete a message", Snackbar.LENGTH_LONG).show()}
+            Snackbar.make(view, "Hold a few seconds to delete a message", Snackbar.LENGTH_LONG).show()}
 
         refreshFloatBtn.setOnClickListener { view ->
             Snackbar.make(view, "Swipe from the top to refresh the shoutbox", Snackbar.LENGTH_LONG).show() }

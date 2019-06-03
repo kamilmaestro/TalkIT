@@ -1,6 +1,7 @@
 package com.kamilmarnik.talkit
 
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import com.kamilmarnik.talkit.model.MessageJSON
 import com.kamilmarnik.talkit.model.Message
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
