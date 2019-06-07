@@ -3,6 +3,7 @@ package com.kamilmarnik.talkit
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.support.v4.widget.DrawerLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.kamilmarnik.talkit.model.User
 import com.kamilmarnik.talkit.model.User.DEF_LOGIN
+import kotlinx.android.synthetic.main.activity_main.*
 
 class UserActivity: Fragment() {
 
@@ -25,11 +27,20 @@ class UserActivity: Fragment() {
 
         setLogin(loadData(this.context, getString(R.string.LOGIN), DEF_LOGIN).toString())
         mLoginEditText.setText(User.login)
+        checkInternetCon(mSetLogin)
         mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); checkLogin()}
     }
 
     private fun setLogin(value: String){
         User.login = value
+    }
+
+    private fun checkInternetCon(mSetLogin: Button){
+        if(!isInternetCon(context)){
+            mSetLogin.isEnabled = false
+            (activity as MainActivity).drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            Toast.makeText(context, "Internet connection required", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun checkLogin(){

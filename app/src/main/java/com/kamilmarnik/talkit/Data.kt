@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.preference.PreferenceManager
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.content.ContextCompat.getSystemService
 import kotlinx.android.synthetic.main.activity_main.*
 
 fun saveData(context: Context?, key: String, value: String) {
@@ -25,7 +24,7 @@ fun goToFragment(fragment: Fragment, fragmentManager: FragmentManager?, activity
     fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, fragment)?.commit()
 }
 
-fun isInternetCon(context: Context): Boolean{
-    val network = (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+fun isInternetCon(context: Context?): Boolean{
+    val network = (context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
     return network != null && network.isConnected
 }
