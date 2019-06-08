@@ -15,7 +15,7 @@ import com.kamilmarnik.talkit.model.User
 import com.kamilmarnik.talkit.model.User.DEF_LOGIN
 import kotlinx.android.synthetic.main.activity_main.*
 
-class UserActivity: Fragment() {
+class UserFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_user, container, false)
@@ -51,7 +51,7 @@ class UserActivity: Fragment() {
     private fun checkLogin(){
         if(User.isLoginProper()) {
             saveData(this.context, getString(R.string.LOGIN), User.login)
-            goToFragment(ShoutboxActivity(), fragmentManager, activity as FragmentActivity, R.id.drawer_shoutbox)
+            goToFragment(ShoutboxFragment(), fragmentManager, activity as FragmentActivity, R.id.drawer_shoutbox)
         }
         else Toast.makeText(this.context, "Wrong login!", Toast.LENGTH_LONG).show()
     }

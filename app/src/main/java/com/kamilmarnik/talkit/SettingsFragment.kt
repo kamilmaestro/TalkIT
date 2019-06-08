@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.kamilmarnik.talkit.model.User
 
-class SettingsActivity: Fragment(){
+class SettingsFragment: Fragment(){
 
     private lateinit var deleteFloatBtn: View
     private lateinit var refreshFloatBtn: View

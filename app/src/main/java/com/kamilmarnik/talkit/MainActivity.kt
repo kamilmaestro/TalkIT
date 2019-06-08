@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        goToFragment(UserActivity(), supportFragmentManager, this, R.id.drawer_user)
+        goToFragment(UserFragment(), supportFragmentManager, this, R.id.drawer_user)
     }
 
     override fun onBackPressed() {
@@ -50,13 +50,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.drawer_shoutbox -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, ShoutboxActivity()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, ShoutboxFragment()).commit()
             }
             R.id.drawer_user -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, UserActivity()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, UserFragment()).commit()
             }
             R.id.drawer_settings -> {
-                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, SettingsActivity()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.fragment_container, SettingsFragment()).commit()
             }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
