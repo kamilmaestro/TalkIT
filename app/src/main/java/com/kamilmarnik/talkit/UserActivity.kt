@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.widget.DrawerLayout
+import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class UserActivity: Fragment() {
         mLoginEditText.setText(User.login)
         checkInternetCon(mSetLogin)
         mSetLogin.setOnClickListener{setLogin(mLoginEditText.text.toString()); checkLogin()}
+        manualRefresh(mSetLogin)
     }
 
     private fun setLogin(value: String){
@@ -40,6 +42,9 @@ class UserActivity: Fragment() {
             mSetLogin.isEnabled = false
             (activity as MainActivity).drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             Toast.makeText(context, "Internet connection required", Toast.LENGTH_LONG).show()
+        }else{
+            mSetLogin.isEnabled = true
+            (activity as MainActivity).drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         }
     }
 
@@ -49,5 +54,10 @@ class UserActivity: Fragment() {
             goToFragment(ShoutboxActivity(), fragmentManager, activity as FragmentActivity, R.id.drawer_shoutbox)
         }
         else Toast.makeText(this.context, "Wrong login!", Toast.LENGTH_LONG).show()
+    }
+
+    private fun manualRefresh(mSetLogin: Button){
+        val pullToRefresh: SwipeRefreshLayout? = view?.findViewById(R.id.pullToRefresh)
+        pullToRefresh?.setOnRefreshListener { checkInternetCon(mSetLogin); pullToRefresh.isRefreshing = false }
     }
 }

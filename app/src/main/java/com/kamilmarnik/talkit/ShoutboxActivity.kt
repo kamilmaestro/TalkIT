@@ -85,7 +85,7 @@ class ShoutboxActivity: Fragment() {
     }
 
     private fun manualRefresh(recView: RecyclerView, messList: MutableList<Any>){
-        val pullToRefresh: SwipeRefreshLayout = view!!.findViewById(R.id.pullToRefresh)
-        pullToRefresh.setOnRefreshListener { messList.clear(); loadMessages(recView); pullToRefresh.isRefreshing = false}
+        val pullToRefresh: SwipeRefreshLayout? = view?.findViewById(R.id.pullToRefresh)
+        pullToRefresh?.setOnRefreshListener { messList.clear(); loadMessages(recView); pullToRefresh.isRefreshing = false}
     }
 }
